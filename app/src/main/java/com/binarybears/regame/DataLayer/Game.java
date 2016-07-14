@@ -13,7 +13,7 @@ public class Game {
     private String mName, mPath;
     private int mRating;
     private Date mLastPlayed;
-    private long mTimePlayed;
+    private long mTimePlayed, mID;
 
     /**
      * Lets think about this for a bit:  Games are going to consist of names,
@@ -73,5 +73,19 @@ public class Game {
     public void setTimePlayed(long timePlayed) {
         mTimePlayed = timePlayed;
     }
+
+    public long getID() {
+        return mID;
+    }
+
+    public void setID(long ID) {
+        this.mID = ID;
+    }
     //endregion
+
+
+    @Override
+    public String toString() {
+        return mName + " (NES)";
+    }
 }

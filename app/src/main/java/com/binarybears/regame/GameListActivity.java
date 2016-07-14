@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.binarybears.regame.DataLayer.Game;
 import com.binarybears.regame.dummy.DummyContent;
 
 import java.util.List;
@@ -72,9 +73,9 @@ public class GameListActivity extends AppCompatActivity {
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-        private final List<DummyContent.DummyItem> mValues;
+        private final List<Game> mValues;
 
-        public SimpleItemRecyclerViewAdapter(List<DummyContent.DummyItem> items) {
+        public SimpleItemRecyclerViewAdapter(List<Game> items) {
             mValues = items;
         }
 
@@ -88,15 +89,15 @@ public class GameListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+            holder.mIdView.setText("#" + mValues.get(position).getID());
+            holder.mContentView.setText(mValues.get(position).getName());
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putString(GameDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        arguments.putLong(GameDetailFragment.ARG_ITEM_ID, holder.mItem.getID());
                         GameDetailFragment fragment = new GameDetailFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()
@@ -105,7 +106,7 @@ public class GameListActivity extends AppCompatActivity {
                     } else {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, GameDetailActivity.class);
-                        intent.putExtra(GameDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        intent.putExtra(GameDetailFragment.ARG_ITEM_ID, holder.mItem.getID());
 
                         context.startActivity(intent);
                     }
@@ -122,7 +123,7 @@ public class GameListActivity extends AppCompatActivity {
             public final View mView;
             public final TextView mIdView;
             public final TextView mContentView;
-            public DummyContent.DummyItem mItem;
+            public Game mItem;
 
             public ViewHolder(View view) {
                 super(view);
